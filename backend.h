@@ -16,33 +16,55 @@ private:
 public:
     backend(QObject  *parent = nullptr): QObject(parent) {};
 
-    Q_INVOKABLE void massege(){
-        qDebug() << "MASSAGE";
-    }
 
-    Q_INVOKABLE void getuser(const QString t) {
+
+    bool IsInDB(){
         QSqlQuery q;
         q.prepare("SELECT 1 FROM user WHERE username = :username LIMIT 1;");
-        q.bindValue(":username", t);
-        if(!q.exec() || q.next() || (t.size() < 1)){
-            if(!userwarning)
-                userwarning = true;
-            emit textVisibleChanged();
-            return;
+        q.bindValue(":username", username);
+        if(!q.exec() || !q.next() || (username.size() < 1)){
+            return false;
         }
-        if(userwarning)
-            userwarning = false;
-        emit textVisibleChanged();
+        return true;
+    }
+    bool IsCorrectPass(){
+        QSqlQuery q;
+        q.prepare("SELECT password FROM user WHERE username = :username;");
+        q.bindValue(":username", username);
+        q.exec();
+        q.next();
+        QString DBpassword = q.value(0).toString();
+        if(password == DBpassword){
+            return true;
+        }
+        qDebug() << "Entered password:" << password << "             correct pass:" << DBpassword;
+        return false;
+    }
+
+
+
+    bool ShowLoginWarning(){
+        if(!IsInDB() || !IsCorrectPass()){
+            userwarning = true;
+            emit textVisibleChanged();
+            return true;
+        }
+        userwarning = false;
+        return false;
+    }
+
+
+
+    Q_INVOKABLE void getuser(const QString t) {
         username = t;
         qDebug() << "username:" << username;
     }
-
-
-
     Q_INVOKABLE void getpass(const QString t) {
         password = t;
-        qDebug() << "password:" << t;
+        qDebug() << "password:" << password;
     }
+
+
 
 
     Q_INVOKABLE void adduser(){
@@ -56,7 +78,19 @@ public:
 
         if (!q.exec()) {
             qDebug() << "INSERT FAILED:";
+            return;
         }
+        isLogged = true;
+        emit LoggedChanged();
+        emit loginSuccess();
+    }
+    Q_INVOKABLE void loginuser(){
+        if(ShowLoginWarning()){
+            return;
+        }
+        isLogged = true;
+        emit LoggedChanged();
+        emit loginSuccess();
     }
 
     bool isUserwarVisible() const { return userwarning; }
@@ -64,4 +98,5 @@ public:
     signals:
         void textVisibleChanged();
         void LoggedChanged();
+        void loginSuccess();
 };

@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls 2.15
 
-Window {
+Page {
     width: 360
     height: 640
     visible: true
@@ -10,11 +10,7 @@ Window {
     Image {
         id: background
         anchors.fill: parent
-        anchors.leftMargin: 0
-        anchors.rightMargin: 0
-        anchors.topMargin: 0
-        anchors.bottomMargin: 0
-        source: "file:///D:/code/qt/time/time/background.png"
+        source: "file:///D:/code/qt/time/time/background-loger.png"
         fillMode: Image.PreserveAspectCrop
 
         Rectangle {
@@ -65,6 +61,25 @@ Window {
                 text: qsTr("Password")
                 font.pixelSize: 14
             }
+
+            Button {
+                id: button1
+                x: 203
+                y: 184
+                width: 96
+                height: 17
+                Text {
+                    text: qsTr("Forgot password?")
+                    anchors.verticalCenterOffset: -4
+                    anchors.horizontalCenterOffset: 0
+                    color: "blue"
+                    anchors.centerIn: parent
+                    width: 96
+                    height: 17
+                    font.underline: true
+                }
+                background: transparent
+            }
         }
 
         BorderImage {
@@ -78,12 +93,12 @@ Window {
 
         Text {
             id: text3
-            x: -45
-            y: 132
-            width: 450
-            height: 100
+            x: 99
+            y: 128
+            width: 163
+            height: 78
             color: "#ffffff"
-            text: qsTr("Log In To Timer")
+            text: qsTr("Log In ")
             font.pixelSize: 42
             horizontalAlignment: Text.AlignHCenter
             font.bold: true
@@ -113,9 +128,9 @@ Window {
     Button {
         id: button
         x: 105
-        y: 384
+        y: 410
         width: 150
-        height: 100
+        height: 50
         background: transparent
         text: qsTr("Log In")
         font.underline: false
@@ -124,7 +139,7 @@ Window {
         onClicked: {
             cppBackend.getuser(texts.text)
             cppBackend.getpass(texts1.text)
-            cppBackend.adduser()
+            cppBackend.loginuser()
         }
 
     }
@@ -158,7 +173,7 @@ Window {
         height: 19
         visible: cppBackend.textVisible
         color: "#ff0010"
-        text: qsTr("username already exist")
+        text: qsTr("username or password is incorrect")
         font.pixelSize: 12
         font.italic: true
         font.bold: true

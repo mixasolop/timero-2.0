@@ -7,11 +7,10 @@ Page {
     visible: true
     title: qsTr("Hello World")
 
-    Image {
+    Rectangle {
         id: background
         anchors.fill: parent
-        source: "file:///D:/code/qt/time/time/background-loger.png"
-        fillMode: Image.PreserveAspectCrop
+        color: "#181c2c"
 
         Rectangle {
             id: rectangle
@@ -19,19 +18,10 @@ Page {
             y: 212
             width: 337
             height: 271
-            color: "#ffffff"
+            color: "#262f51"
             radius: 40
             border.width: 0
             baselineOffset: 0
-
-            Rectangle {
-                id: rectangle1
-                x: 38
-                y: 83
-                width: 261
-                height: 2
-                color: "#000000"
-            }
 
             Text {
                 id: text1
@@ -41,15 +31,6 @@ Page {
                 height: 20
                 text: qsTr("Username")
                 font.pixelSize: 14
-            }
-
-            Rectangle {
-                id: rectangle3
-                x: 38
-                y: 176
-                width: 261
-                height: 2
-                color: "#000000"
             }
 
             Text {
@@ -67,10 +48,10 @@ Page {
                 x: 203
                 y: 184
                 width: 96
-                height: 17
+                height: 15
                 Text {
                     text: qsTr("Forgot password?")
-                    anchors.verticalCenterOffset: -4
+                    anchors.verticalCenterOffset: -3
                     anchors.horizontalCenterOffset: 0
                     color: "blue"
                     anchors.centerIn: parent
@@ -97,7 +78,7 @@ Page {
             y: 128
             width: 163
             height: 78
-            color: "#ffffff"
+            color: "#e4e4e4"
             text: qsTr("Log In ")
             font.pixelSize: 42
             horizontalAlignment: Text.AlignHCenter
@@ -110,14 +91,16 @@ Page {
         y: 262
         width: 261
         height: 32
-        color: "#e1ffe1"
+        color: "#181c2c"
+        radius: 7
     }
     TextInput {
         id: texts
-        x: 50
-        y: 262
-        width: 261
+        x: 55
+        y: 264
+        width: 256
         height: 32
+        color: "#e4e4e4"
         text: qsTr("")
         font.pixelSize: 20
         horizontalAlignment: Text.AlignLeft
@@ -132,16 +115,20 @@ Page {
         width: 150
         height: 50
         background: transparent
-        text: qsTr("Log In")
-        font.underline: false
-        font.bold: false
-        font.pointSize: 22
+
         onClicked: {
             cppBackend.getuser(texts.text)
             cppBackend.getpass(texts1.text)
             cppBackend.loginuser()
         }
+        Text{
+            anchors.centerIn: parent
+            text: "Log In"
+            color: "#e4e4e4"
+            font.bold: true
+            font.pixelSize: 32
 
+        }
     }
 
     Rectangle {
@@ -149,13 +136,16 @@ Page {
         y: 355
         width: 261
         height: 32
-        color: "#e1ffe1"}
+        color: "#181c2c"
+        radius: 7
+    }
     TextInput {
         id: texts1
-        x: 50
-        y: 355
-        width: 261
+        x: 55
+        y: 357
+        width: 256
         height: 32
+        color: "#e4e4e4"
         text: qsTr("")
         font.pixelSize: 20
         horizontalAlignment: Text.AlignLeft
@@ -172,7 +162,7 @@ Page {
         width: 200
         height: 19
         visible: cppBackend.textVisible
-        color: "#ff0010"
+        color: "#d50310"
         text: qsTr("username or password is incorrect")
         font.pixelSize: 12
         font.italic: true

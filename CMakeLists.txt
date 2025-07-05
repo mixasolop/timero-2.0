@@ -23,6 +23,8 @@ qt_add_qml_module(apptime
         RESOURCES img.qrc
         QML_FILES Logger.qml
         QML_FILES MainScreen.qml
+        QML_FILES Focus_dur.qml
+        QML_FILES Countdown.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

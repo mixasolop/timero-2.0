@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QObject>
 #include <QSqlQuery>
+using namespace std;
 
 class backend: public QObject
 {
@@ -11,8 +12,10 @@ class backend: public QObject
     Q_PROPERTY(bool textVisible READ isUserwarVisible NOTIFY textVisibleChanged)
     bool userwarning = false;
     Q_PROPERTY(bool is_logged READ isLoggedVisible NOTIFY LoggedChanged)
+    Q_PROPERTY(QString usernam READ Getusernam NOTIFY usernamChanged)
+    int TotalMinutes;
 private:
-    bool isLogged = false;
+    bool isLogged = true;
 public:
     backend(QObject  *parent = nullptr): QObject(parent) {};
 
@@ -55,6 +58,8 @@ public:
 
 
 
+    Q_INVOKABLE void setTotalMinutes(int a){TotalMinutes = a;}
+    Q_INVOKABLE int getTotalMinutes(){return TotalMinutes;}
     Q_INVOKABLE void getuser(const QString t) {
         username = t;
         qDebug() << "username:" << username;
@@ -95,8 +100,10 @@ public:
 
     bool isUserwarVisible() const { return userwarning; }
     bool isLoggedVisible() const { return isLogged; }
+    QString Getusernam() const { return username; }
     signals:
         void textVisibleChanged();
         void LoggedChanged();
         void loginSuccess();
+        void usernamChanged();
 };

@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <math.h>
 #include "backend.h"
 
 int main(int argc, char *argv[])
